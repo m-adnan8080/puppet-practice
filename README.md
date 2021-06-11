@@ -1,10 +1,12 @@
 # Install Puppet Server on Ubuntu
 =================================
 
-sudo nano /etc/hosts
+_sudo nano /etc/hosts
+_
 '''
 [puppet master ip] puppetmaster puppet
 [puppet client ip] puppetclient
+'''
 
 wget https://apt.puppetlabs.com/puppet6-release-focal.deb
 
