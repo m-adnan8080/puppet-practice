@@ -1,76 +1,76 @@
 # Install Puppet Server on Ubuntu
 =================================
 
-  sudo nano /etc/hosts
+sudo nano /etc/hosts
 
-    ```
-    [puppet master ip] puppetmaster puppet
-    [puppet client ip] puppetclient
-    ```
+```
+[puppet master ip] puppetmaster puppet
+[puppet client ip] puppetclient
+```
 
-  wget https://apt.puppetlabs.com/puppet6-release-focal.deb
+wget https://apt.puppetlabs.com/puppet6-release-focal.deb
 
-  sudo dpkg -i puppet6-release-focal.deb
+sudo dpkg -i puppet6-release-focal.deb
 
-  sudo apt-get update -y
+sudo apt-get update -y
 
-  sudo apt-get install puppetserver pdk -y
+sudo apt-get install puppetserver pdk -y
 
-  sudo nano /etc/default/puppetserver
+sudo nano /etc/default/puppetserver
 
-    ```
-    JAVA_ARGS="-Xms1g -Xmx1g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
-    ```
+```
+JAVA_ARGS="-Xms1g -Xmx1g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
+```
 
-  sudo systemctl enable --now puppetserver
+sudo systemctl enable --now puppetserver
 
-  sudo /opt/puppetlabs/bin/puppetserver ca list --all
-  sudo /opt/puppetlabs/bin/puppetserver ca sign --all
+sudo /opt/puppetlabs/bin/puppetserver ca list --all
+sudo /opt/puppetlabs/bin/puppetserver ca sign --all
 
-  sudo /opt/puppetlabs/bin/puppetserver ca sign --certname <Agent Name>
-  sudo /opt/puppetlabs/bin/puppetserver ca clean --certname <Agent Name>
+sudo /opt/puppetlabs/bin/puppetserver ca sign --certname <Agent Name>
+sudo /opt/puppetlabs/bin/puppetserver ca clean --certname <Agent Name>
 
 # Install Puppet Agent Ubuntu
 =============================
 
-  wget https://apt.puppetlabs.com/puppet6-release-focal.deb
+wget https://apt.puppetlabs.com/puppet6-release-focal.deb
 
-  sudo dpkg -i puppet6-release-focal.deb
+sudo dpkg -i puppet6-release-focal.deb
 
-  sudo apt-get update -y
+sudo apt-get update -y
 
-  sudo apt-get install puppet-agent -y
+sudo apt-get install puppet-agent -y
 
-  sudo nano /etc/puppetlabs/puppet/puppet.conf
+sudo nano /etc/puppetlabs/puppet/puppet.conf
 
-    ```
-    [main]
-    certname = puppetclient
-    server = puppetmaster
-    ```
+```
+[main]
+certname = puppetclient
+server = puppetmaster
+```
 
-  sudo systemctl enable --now puppetserver
+sudo systemctl enable --now puppetserver
 
-  sudo /opt/puppetlabs/bin/puppet agent --test
+sudo /opt/puppetlabs/bin/puppet agent --test
 
 # Install Puppet Agent CentOS
 =============================
 
-  sudo rpm -Uvh https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm
+sudo rpm -Uvh https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm
 
-  sudo yum install -y puppet-agent
+sudo yum install -y puppet-agent
 
-  sudo nano /etc/puppetlabs/puppet/puppet.conf
+sudo nano /etc/puppetlabs/puppet/puppet.conf
 
-    '''
-    [main]
-    certname = puppetclient
-    server = puppetmaster
-    '''
-  
-  sudo systemctl enable --now puppetserver
+```
+[main]
+certname = puppetclient
+server = puppetmaster
+```
 
-  sudo /opt/puppetlabs/bin/puppet agent --test
+sudo systemctl enable --now puppetserver
+
+sudo /opt/puppetlabs/bin/puppet agent --test
 
 # Module creation process
 =========================
@@ -103,7 +103,7 @@ class nginx::install {
 puppet parser validate manifests/install.pp
 
 # to create init.pp manifest
-pdk new class nginx
+`pdk new class nginx`
 
 `nano manifests/init.pp`
 
@@ -128,4 +128,4 @@ node puppetagent1.test {
   class { 'nginx': }
 }
 ```
-  
+
