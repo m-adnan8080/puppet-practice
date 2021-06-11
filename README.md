@@ -1,7 +1,8 @@
 # Install Puppet Server on Ubuntu
 =================================
-sudo nano /etc/hosts
 
+sudo nano /etc/hosts
+'''
 [puppet master ip] puppetmaster puppet
 [puppet client ip] puppetclient
 
