@@ -81,7 +81,7 @@ sudo systemctl enable --now puppetserver
 
 sudo /opt/puppetlabs/bin/puppet agent --test
 
-============================================================================================
+=========================================================================================
 # Puppet server module creation process
 
 ## Step1
@@ -143,7 +143,7 @@ node puppetagent1.test {
 
 
 
-============================================================================================
+=========================================================================================
 # Puppet Server integration with gitlab server
 
 ## Puppet Server Setup
