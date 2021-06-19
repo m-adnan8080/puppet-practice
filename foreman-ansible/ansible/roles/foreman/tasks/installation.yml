@@ -1,0 +1,21 @@
+---
+- name: update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_pkg_mgr == "apt"
+
+- name: install foreman-installer
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ foreman_pkg }}"
+
+- name: run foreman installer package
+  command: foreman-installer -s
+
+- name: install foreman postgresql database adapter
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ foreman_db_pgsql_adapter_pkg }}"
+  when: foreman_db_adapter == "postgresql"

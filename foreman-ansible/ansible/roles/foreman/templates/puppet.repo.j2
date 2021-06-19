@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+[puppet]
+name=puppet_repo
+baseurl={{ puppet_yum_main_baseurl }}
+gpgcheck={{ puppet_yum_main_gpg }}
+enabled=1

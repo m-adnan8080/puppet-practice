@@ -1,0 +1,5 @@
+---
+foreman_pkg: foreman-installer
+foreman_extra_repos_pkg: []
+
+foreman_db_pgsql_adapter_pkg: foreman-postgresql
