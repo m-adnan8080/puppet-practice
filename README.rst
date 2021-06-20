@@ -82,10 +82,11 @@ Below a short overview of all included roles:
 +-----------------+----------------------------------------------------+
 | isc_dhcp_server | install and configure isc-dhcp-server              |
 +-----------------+----------------------------------------------------+
-| Apache          | apache reverse proxy + self signed SSL certificate |
+| apache          | aapache reverse proxy and SSL/TLS certificate      |
 +-----------------+----------------------------------------------------+
 | tftp            | install and setup TFTP including PXE boot files    |
 +-----------------+----------------------------------------------------+
+
 
 Foreman Libvirt provisioner
 ===========================
