@@ -330,9 +330,10 @@ useradd --create-home --shell /bin/bash --user-group --password erijfEFSEF3554jf
 sudo -n -H -u puppet bash -c "/opt/puppetlabs/puppet/bin/r10k deploy environment $1 --verbose --puppetfile"
 ```
 
-chown gitlab-runner:gitlab-runner -R /home/gitlab-runner/
-chmod +x /home/gitlab-runner/puppet_deploy.sh
-
+```
+    chown gitlab-runner:gitlab-runner -R /home/gitlab-runner/
+    chmod +x /home/gitlab-runner/puppet_deploy.sh
+```
 
 ### Git Server Setup
 Control-repo \ Setings \ CI/CD, Deploy Keys from the public key: /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa.pub
