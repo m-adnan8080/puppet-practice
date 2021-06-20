@@ -1,7 +1,6 @@
 # Ansible Playbook to install foreman and puppet master
 ## Foreman + Puppet Master Ansible Playbook
 
-========================
 Foreman Ansible Playbook
 ========================
 
@@ -46,23 +45,26 @@ Installation
 Below the required steps to execute the default playbook:
 
 1. Clone this repository
-2. Initialize the submodules containing the foreman-yml repository: ::
+2. Initialize the submodules containing the foreman-yml repository:
 
-   $ git submodule update --init
+    `$ git submodule update --init`
 
 3. Install and configure Ansible to manage the target server
 4. Create an inventory file containing either the hostname or IP address of
-   target machine: ::
+   target machine:
 
-    $ echo "$TARGET_IP" > /tmp/inventory
+    `$ echo "$TARGET_IP" > /tmp/inventory`
 
-5. Use the playbook foreman.yml to deploy a default setup TFTP, DHCP and foreman-proxy: ::
+5. Use the playbook foreman.yml to deploy a default setup TFTP, DHCP and foreman-proxy:
 
-    $ ansible-playbook foreman.yml -i /tmp/inventory -u root
+    `$ ansible-playbook foreman.yml -i /tmp/inventory -u root`
 
-6. After a successful deployment you should be able to access Foreman through http://$TARGET_IP/.
+6. After a successful deployment you should be able to access Foreman
+through `http://$TARGET_IP/`.
 
-The password of the ``admin`` user is by default set to ``foreman``. The password can be updated using defaults/main.yml file by setting foreman_admin_password = SomeStrongP@ssWD
+The password of the ``admin`` user is by default set to ``foreman``.
+The password can be updated using defaults/main.yml file by setting
+``foreman_admin_password = SomeStrongP@ssWD``
 
 Roles
 =====
@@ -88,33 +90,35 @@ Below a short overview of all included roles:
 
 Foreman Libvirt provisioner
 ===========================
-1. Login as foreman user on foreman server::
+1. Login as foreman user on foreman server
 
-    $ sudo su - foreman -s /bin/bash
+    `$ sudo su - foreman -s /bin/bash`
 
-2. Create ssh-keys for foreman user::
+2. Create ssh-keys for foreman user
 
-    $ ssh-keygen
+    `$ ssh-keygen`
 
-3. Copy foreman user ssh public key to libvirt server root user and exit foreman user::
+3. Copy foreman user ssh public key to libvirt server root user and exit foreman user
 
-    $ ssh-copy-id root@<libvirt_server_ip>
+    `$ ssh-copy-id root@<libvirt_server_ip>`
 
-4. Install libvirt-client on foreman server::
+4. Install libvirt-client on foreman server
 
-    $ sudo apt install libvirt-client
+    `$ sudo apt install -y foreman-libvirt libvirt-client`
 
-5. Testing the connection with libvirt server::
+5. Testing the connection with libvirt server
 
-    $ sudo su foreman -s /bin/bash -c 'virsh -c qemu+ssh://root@<libvirt_server_ip>/system list'
+    `$ sudo su foreman -s /bin/bash -c 'virsh -c qemu+ssh://root@<libvirt_server_ip>/system list'`
 
-6. Configure the foreman to use libvirt provisioner using foreman Web UI.::
-      Infrastructure -> Compute Resources -> Create Compute Resource
+6. Configure the foreman to use libvirt provisioner using foreman Web UI.
+
+```      Infrastructure -> Compute Resources -> Create Compute Resource
 
       Name: Provide_Provisioner_Name
       Provider: Libvirt
       Description: Description
       Url: qemu+ssh://root@<libvirt_server_ip>/system
+```
 
       Leave rest as default and save the settings
 
