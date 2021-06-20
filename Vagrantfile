@@ -2,9 +2,9 @@
 # vi: set ft=ruby :
 
 cluster = {
-  "puppetmaster" => { :ip => "192.168.18.111", :mem => 4096, :cpu => 2 },
+ "puppetmaster" => { :ip => "192.168.18.111", :mem => 4096, :cpu => 2 },
 #  "puppetagent1" => { :ip => "192.168.18.112", :mem => 1024, :cpu => 2 },
-  "puppetagent2" => { :ip => "192.168.18.113", :mem => 1024, :cpu => 2 }
+#  "puppetagent2" => { :ip => "192.168.18.113", :mem => 1024, :cpu => 2 }
 }
 
 Vagrant.configure("2") do |config|

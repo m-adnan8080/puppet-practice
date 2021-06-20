@@ -2,14 +2,7 @@
 Foreman Ansible Playbook
 ========================
 
-|Travis| |License|
-
-.. |Travis| image:: https://img.shields.io/travis/adfinis-sygroup/foreman-ansible.svg?style=flat-square
-   :target: https://travis-ci.org/adfinis-sygroup/foreman-ansible
-.. |License| image:: https://img.shields.io/github/license/adfinis-sygroup/foreman-ansible.svg?style=flat-square
-   :target: LICENSE
-
-Ansible playbook to deploy a complete up and running Foreman instance within
+Ansible playbook to deploy a complete up and running Foreman and puppet-master instance within
 minutes.
 
 Features
@@ -20,19 +13,11 @@ complete and ready-to-use Foreman instance within minutes.
 It contains multiple different roles with numerous customizable variables,
 which provide the following features:
 
-* setup database (SQLite or MySQL)
-* setup webserver (plain nginx as a proxy or nginx-passenger)
+* setup webserver (apache as a proxy with ssl)
 * setup isc-dhcp-server
 * setup TFTP server
 * setup foreman-proxy
 * setup Foreman including configuration (templates, hosts, domains, etc.)
-
-**None of the roles will install Puppet or use the official foreman-installer,
-instead the plain Foreman packages are used!**
-
-In addition this playbook makes use of `foreman-yml`_ to automatically configure
-Foreman through the API based on a YAML file, which includes adding all 
-templates, OS, media, hosts, etc. and linking them accordingly.
 
 Please note that at the current time the following distributions are supported:
 
@@ -68,25 +53,13 @@ Below the required steps to execute the default playbook:
 
     $ echo "$TARGET_IP" > /tmp/inventory
 
-5. Use the playbook foreman.yml to deploy a default setup with MySQL,
-   nginx-passenger, TFTP, DHCP and foreman-proxy: :: 
+5. Use the playbook foreman.yml to deploy a default setup TFTP, DHCP and foreman-proxy: ::
 
     $ ansible-playbook foreman.yml -i /tmp/inventory -u root
 
-6. After a successful deployment you should be able to access Foreman through 
-   http://$TARGET_IP/.
+6. After a successful deployment you should be able to access Foreman through http://$TARGET_IP/.
 
-The password of the ``admin`` user is by default set to ``foreman``. In addition
-``safemode_render`` is changed to ``false``.
-
-Examples
-========
-The templates directory contains example `foreman-yml`_ YAML templates to
-give you a head start to bootstrap Foreman.
-
-In addition the variables overwritten in vars/example.yml are the minimum
-amount of variables that need to be defined, e.g. the MySQL role does not
-create any users or databases by default.
+The password of the ``admin`` user is by default set to ``foreman``. The password can be updated using defaults/main.yml file by setting foreman_admin_password = SomeStrongP@ssWD
 
 Roles
 =====
@@ -105,31 +78,43 @@ Below a short overview of all included roles:
 +-----------------+----------------------------------------------------+
 | isc_dhcp_server | install and configure isc-dhcp-server              |
 +-----------------+----------------------------------------------------+
-| mysql           | install MySQL, create users and databases          |
-+-----------------+----------------------------------------------------+
-| nginx           | add upstream repos if requested and setup nginx    |
-+-----------------+----------------------------------------------------+
-| passenger_nginx | add repos and setup passenger-nginx                |
-+-----------------+----------------------------------------------------+
-| sqlite          | install sqlite and create db directory             |
+| Apache          | apache reverse proxy + self signed SSL certificate |
 +-----------------+----------------------------------------------------+
 | tftp            | install and setup TFTP including PXE boot files    |
 +-----------------+----------------------------------------------------+
 
-Upcoming features
-=================
-See the issues page for a list of upcoming and planned features.
+Foreman Libvirt provisioner
+===========================
+1. Login as foreman user on foreman server::
 
-Contributions
-=============
-Contributions are more than welcome! Please feel free to open new issues or
-pull requests.
+    $ sudo su - foreman -s /bin/bash
+
+2. Create ssh-keys for foreman user::
+
+    $ ssh-keygen
+
+3. Copy foreman user ssh public key to libvirt server root user and exit foreman user::
+
+    $ ssh-copy-id root@<libvirt_server_ip>
+
+4. Install libvirt-client on foreman server::
+
+    $ sudo apt install -y foreman-libvirt libvirt-client
+
+5. Testing the connection with libvirt server::
+
+    $ sudo su foreman -s /bin/bash -c 'virsh -c qemu+ssh://root@<libvirt_server_ip>/system list'
+
+6. Configure the foreman to use libvirt provisioner using foreman Web UI.::
+      Infrastructure -> Compute Resources -> Create Compute Resource
+
+      Name: Provide_Provisioner_Name
+      Provider: Libvirt
+      Description: Description
+      Url: qemu+ssh://root@<libvirt_server_ip>/system
+
+      Leave rest as default and save the settings
 
 License
 =======
 GNU GENERAL PUBLIC LICENSE Version 3
-
-See the `LICENSE`_ file.
-
-.. _LICENSE: LICENSE
-.. _foreman-yml: https://github.com/adfinis-sygroup/foreman-yml
