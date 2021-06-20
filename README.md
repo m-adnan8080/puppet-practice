@@ -1,8 +1,7 @@
-# Ansible Playbook to install foreman and puppet master
-## Foreman + Puppet Master Ansible Playbook
+# Automated Installer
 
-Foreman Ansible Playbook
-========================
+Foreman/Puppet Master Ansible Playbook
+======================================
 
 Ansible playbook to deploy a complete up and running Foreman and puppet-master instance within
 minutes.
@@ -112,15 +111,14 @@ Foreman Libvirt provisioner
 
 6. Configure the foreman to use libvirt provisioner using foreman Web UI.
 
-```      Infrastructure -> Compute Resources -> Create Compute Resource
+```   Infrastructure -> Compute Resources -> Create Compute Resource
 
       Name: Provide_Provisioner_Name
       Provider: Libvirt
       Description: Description
       Url: qemu+ssh://root@<libvirt_server_ip>/system
 ```
-
-      Leave rest as default and save the settings
+    Leave rest as default and save the settings
 
 License
 =======
