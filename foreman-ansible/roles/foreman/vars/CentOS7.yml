@@ -3,5 +3,6 @@ foreman_pkg: foreman-installer
 foreman_extra_repos_pkg:
   - epel-release
   - centos-release-scl-rh
+  # - foreman-release-scl
 
 foreman_db_pgsql_adapter_pkg: foreman-postgresql

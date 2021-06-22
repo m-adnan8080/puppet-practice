@@ -1,100 +1,46 @@
 ---
+# Debian foreman apt key
 - name: configure foreman apt key
   apt_key:
     url: "{{ foreman_apt_main_key }}"
     state: present
   when: ansible_os_family == "Debian" and foreman_apt_main_gpg
 
+# Debian foreman apt repo
 - name: configure foreman apt repository
   apt_repository:
-    repo: "deb {{ foreman_apt_main_baseurl }} {{ foreman_apt_main_os_version }} {{ foreman_apt_main_release }}"
+    repo: "deb {{ foreman_apt_main_baseurl }} {{ foreman_apt_main_os_version }} {{ foreman_release }}"
     state: present
   when: ansible_os_family == "Debian"
 
-- name: check puppet apt repository status
-  stat:
-    path: '/etc/apt/source.list.d/puppuet6.list'
-  register: puppet_apt_repo_status
-  when: ansible_os_family == "Debian"
-
-- name: configure puppet apt repository
-  command: "{{ item }} chdir=/tmp"
-  with_items:
-    - 'wget "{{ puppet_apt_main_deburl }}"'
-    - "dpkg -i /tmp/puppet{{ puppet_apt_main_release }}-release-{{ ansible_distribution_release }}.deb"
-  when: ansible_os_family == "Debian" and puppet_apt_repo_status.stat.exists == False
-
-- name: configure foreman plugins apt key
-  apt_key:
-    url: "{{ foreman_apt_plugins_key }}"
-    state: present
-  when: ansible_os_family == "Debian" and foreman_apt_plugins_gpg and foreman_plugins_repo
-
+# Debian foreman plugin apt repo
 - name: configure foreman plugins apt repository
   apt_repository:
-    repo: "deb {{ foreman_apt_plugins_baseurl }} {{ foreman_apt_plugins_os_version }} {{ foreman_apt_plugins_release }}"
+    repo: "deb {{ foreman_apt_plugins_baseurl }} {{ foreman_apt_plugins_os_version }} {{ foreman_release }}"
     state: present
   when: ansible_os_family == "Debian" and foreman_plugins_repo
 
-- name: configure foreman rpm key
-  rpm_key:
-    key: "{{ foreman_yum_main_key }}"
+# Debian puppet apt repo
+- name: configure puppet apt repository
+  apt_repository:
+    url: "{{ puppet_apt_main_deburl }}"
     state: present
-  when: ansible_os_family == "RedHat" and foreman_yum_main_gpg
+  when: ansible_os_family == "Debian"
 
+# Redhat foreman yum repo
 - name: configure foreman yum repository
-  template:
-    src: foreman.repo.j2
-    dest: /etc/yum.repos.d/foreman.repo
+  yum:
+    name: "{{ foreman_yum_main_baseurl }}"
+    state: present
+    disable_gpg_check: yes
   when: ansible_os_family == "RedHat"
 
-- name: check puppet yum repository status
-  stat:
-    path: '/etc/yum.repos.d/puppuet6.repo'
-  register: puppet_yum_repo_status
-  when: ansible_os_family == "RedHat"
-
+# Redhat puppet yum repo
 - name: configure puppet yum repository
   yum:
     name: "{{ puppet_yum_main_baseurl }}"
     state: present
-  when: ansible_os_family == "RedHat" and puppet_yum_repo_status.stat.exists == False
-
-- name: configure foreman plugins rpm key
-  rpm_key:
-    key: "{{ foreman_yum_plugins_key }}"
-    state: present
-  when: ansible_os_family == "RedHat" and foreman_yum_plugins_gpg and foreman_plugins_repo
-
-- name: configure foreman plugins yum repository
-  template:
-    src: foreman_plugins.repo.j2
-    dest: /etc/yum.repos.d/foreman_plugins.repo
-  when: ansible_os_family == "RedHat" and foreman_plugins_repo
-
-- name: configure foreman rails rpm key
-  rpm_key:
-    key: "{{ foreman_yum_rails_key }}"
-    state: present
-  when: ansible_os_family == "RedHat" and foreman_yum_rails_gpg and foreman_rails_repo
-
-- name: configure foreman rails yum repository
-  template:
-    src: foreman_rails.repo.j2
-    dest: /etc/yum.repos.d/foreman_rails.repo
-  when: ansible_os_family == "RedHat" and foreman_raills_repo
-
-- name: configure foreman ror51 rpm key
-  rpm_key:
-    key: "{{ foreman_yum_ror51_key }}"
-    state: present
-  when: ansible_distribution == "RedHat" and foreman_yum_ror51_gpg and foreman_ror51_repo
-
-- name: configure foreman ror51 yum repository
-  template:
-    src: foreman_ror51.repo.j2
-    dest: /etc/yum.repos.d/foreman_ror51.repo
-  when: ansible_distribution == "RedHat" and foreman_ror51_repo
+  when: ansible_os_family == "RedHat"
 
 - name: configure additional repositories
   package:

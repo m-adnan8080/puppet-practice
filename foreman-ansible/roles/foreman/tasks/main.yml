@@ -13,4 +13,3 @@
 - include: repository.yml
 - include: installation.yml
 - include: configuration.yml
-# - include: database.yml

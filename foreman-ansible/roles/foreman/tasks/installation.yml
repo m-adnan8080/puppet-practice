@@ -15,17 +15,17 @@
           --foreman-initial-admin-password {{ foreman_admin_password }}"
   delay: 10
 
-- name: run foreman installer to addtional plugins
-  shell: "foreman-installer -s \
-          --foreman-proxy-tftp=true \
-          --foreman-proxy-dns=true \
-          --foreman-proxy-dns-interface=eth1 \
-          --foreman-proxy-dns-zone=local.test \
-          --foreman-proxy-dns-forwarders=8.8.8.8 \
-          --foreman-proxy-dns-forwarders=8.8.4.4 \
-          --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa \
-          --enable-foreman-proxy-plugin-discovery \
-          --foreman-proxy-plugin-discovery-install-images=true"
+# - name: run foreman installer to addtional plugins
+#   shell: "foreman-installer -s \
+#           --foreman-proxy-tftp=true \
+#           --foreman-proxy-dns=true \
+#           --foreman-proxy-dns-interface=eth1 \
+#           --foreman-proxy-dns-zone=local.test \
+#           --foreman-proxy-dns-forwarders=8.8.8.8 \
+#           --foreman-proxy-dns-forwarders=8.8.4.4 \
+#           --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa \
+#           --enable-foreman-proxy-plugin-discovery \
+#           --foreman-proxy-plugin-discovery-install-images=true"
 
 - name: install foreman postgresql database adapter
   package:
