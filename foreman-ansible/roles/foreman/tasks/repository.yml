@@ -72,6 +72,18 @@
     dest: /etc/yum.repos.d/foreman_plugins.repo
   when: ansible_os_family == "RedHat" and foreman_plugins_repo
 
+- name: configure foreman rails rpm key
+  rpm_key:
+    key: "{{ foreman_yum_rails_key }}"
+    state: present
+  when: ansible_os_family == "RedHat" and foreman_yum_rails_gpg and foreman_rails_repo
+
+- name: configure foreman rails yum repository
+  template:
+    src: foreman_rails.repo.j2
+    dest: /etc/yum.repos.d/foreman_rails.repo
+  when: ansible_os_family == "RedHat" and foreman_raills_repo
+
 - name: configure foreman ror51 rpm key
   rpm_key:
     key: "{{ foreman_yum_ror51_key }}"
