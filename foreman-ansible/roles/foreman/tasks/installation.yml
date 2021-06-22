@@ -18,6 +18,11 @@
 - name: run foreman installer to addtional plugins
   shell: "foreman-installer -s \
           --foreman-proxy-tftp=true \
+          --foreman-proxy-dhcp=true \
+          --foreman-proxy-dhcp-interface=eth1 \
+          --foreman-proxy-dhcp-gateway=192.168.100.1 \
+          --foreman-proxy-dhcp-nameservers='192.168.100.111' \
+          --foreman-proxy-dhcp-range='192.168.100.131 192.168.100.230' \
           --foreman-proxy-dns=true \
           --foreman-proxy-dns-interface=eth1 \
           --foreman-proxy-dns-zone=local.test \
