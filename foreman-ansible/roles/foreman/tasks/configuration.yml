@@ -1,10 +1,4 @@
 ---
-- name: template foreman settings.yaml
-  template:
-    src: settings.yaml.j2
-    dest: /etc/foreman/settings.yaml
-    backup: yes
-
 - name: configure foreman init config
   replace:
     dest: /etc/default/foreman

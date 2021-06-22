@@ -1,4 +1,9 @@
 ---
+- name: update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_pkg_mgr == "apt"
+
 - name: include os specific vars
   include_vars: "{{ item }}"
   with_first_found:
@@ -8,4 +13,4 @@
 - include: repository.yml
 - include: installation.yml
 - include: configuration.yml
-- include: database.yml
+# - include: database.yml
