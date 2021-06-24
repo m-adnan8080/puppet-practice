@@ -1,5 +1,4 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
 cluster = {
   "foreman" => { :ip => "192.168.100.111", :mem => 4096, :cpu => 2 },
