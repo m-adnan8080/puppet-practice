@@ -1,1 +1,3 @@
 .*
+foreman-ansible/inventory
+libvirt-vagrant-nat-network.xml

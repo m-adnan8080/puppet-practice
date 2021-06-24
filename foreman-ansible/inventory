@@ -1,5 +1,5 @@
 [foreman]
-192.168.100.111
+192.168.121.2
 
 [all:vars]
 ansible_user=vagrant
