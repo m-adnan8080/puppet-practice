@@ -22,8 +22,8 @@
 
 # Debian puppet apt repo
 - name: configure puppet apt repository
-  apt_repository:
-    url: "{{ puppet_apt_main_deburl }}"
+  apt:
+    deb: "{{ puppet_apt_main_deburl }}"
     state: present
   when: ansible_os_family == "Debian"
 

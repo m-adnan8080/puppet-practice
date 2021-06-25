@@ -1,13 +1,13 @@
 ---
-foreman_release: "2.4"
-puppet_release: 6
+foreman_release: "1.18"
+puppet_release: 5
 
 foreman_apt_main_baseurl: "http://deb.theforeman.org/"
 foreman_apt_main_os_version: "{{ ansible_distribution_release }}"
 foreman_apt_main_gpg: 1
 foreman_apt_main_key: "http://deb.theforeman.org/pubkey.gpg"
 
-puppet_apt_main_deburl: "https://apt.puppet.com/puppet{{ puppet_release }}-release-{{ ansible_distribution_release }}.deb"
+puppet_apt_main_deburl: "https://apt.puppetlabs.com/puppet-release-{{ ansible_distribution_release }}.deb"
 
 foreman_apt_plugins_baseurl: "http://deb.theforeman.org/"
 foreman_apt_plugins_os_version: plugins
