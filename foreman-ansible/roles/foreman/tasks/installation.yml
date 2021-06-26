@@ -10,27 +10,26 @@
     state: present
   with_items: "{{ foreman_pkg }}"
 
-- name: run foreman installer package
-  shell: "foreman-installer -s \
-          --foreman-initial-admin-password {{ foreman_admin_password }}"
-  delay: 10
-
-# - name: run foreman installer to addtional plugins
+# - name: run foreman installer package
 #   shell: "foreman-installer -s \
-#           --foreman-proxy-tftp=true \
-#           --foreman-proxy-dhcp=true \
-#           --foreman-proxy-dhcp-interface=eth1 \
-#           --foreman-proxy-dhcp-gateway=192.168.100.1 \
-#           --foreman-proxy-dhcp-nameservers='192.168.100.111' \
-#           --foreman-proxy-dhcp-range='192.168.100.131 192.168.100.230' \
-#           --foreman-proxy-dns=true \
-#           --foreman-proxy-dns-interface=eth1 \
-#           --foreman-proxy-dns-zone=local.test \
-#           --foreman-proxy-dns-forwarders=8.8.8.8 \
-#           --foreman-proxy-dns-forwarders=8.8.4.4 \
-#           --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa \
-#           --enable-foreman-proxy-plugin-discovery \
-#           --foreman-proxy-plugin-discovery-install-images=true"
+#           --foreman-admin-password {{ foreman_admin_password }}"
+#   delay: 10
+
+- name: run foreman installer to addtional plugins
+  shell: "foreman-installer -s \
+          --foreman-proxy-tftp={{ foreman_proxy_tftp }} \
+          --foreman-proxy-dhcp={{ foreman_proxy_dhcp }} \
+          --foreman-proxy-dhcp-interface={{ foreman_net_interface }} \
+          --foreman-proxy-dhcp-gateway={{ ansible_default_ipv4.gateway }} \
+          --foreman-proxy-dhcp-nameservers={{ ansible_eth1.ipv4.address }} \
+          --foreman-proxy-dhcp-range='{{ foreman_dhcp_start_ip }} {{ foreman_dhcp_end_ip }}' \
+          --foreman-proxy-dns={{ foreman_proxy_dns }} \
+          --foreman-proxy-dns-interface={{ foreman_net_interface }} \
+          --foreman-proxy-dns-zone={{ foreman_domain }} \
+          --foreman-proxy-dns-forwarders='{{ foreman_dns_forwarders }}' \
+          --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa \
+          --enable-foreman-proxy-plugin-discovery \
+          --foreman-proxy-plugin-discovery-install-images=true"
 
 - name: install foreman postgresql database adapter
   package:

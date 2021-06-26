@@ -5,3 +5,10 @@
     regexp: "START=no"
     replace: "START=yes"
   when: ansible_os_family == "Debian" and foreman_enable_service
+
+- name: config ssh
+  copy:
+    src: .ssh
+    dest: /usr/share/foreman
+    owner: foreman
+    group: foreman
