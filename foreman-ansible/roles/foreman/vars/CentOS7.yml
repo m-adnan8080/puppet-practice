@@ -1,8 +1,16 @@
 ---
-foreman_pkg: foreman-installer
+foreman_pkg:
+  - foreman-installer
+  - foreman-installer-katello
+
+foreman_plugins_pkg:
+  - foreman-postgresql
+  - tfm-rubygem-foreman_discovery
+  - foreman-discovery-image-service
+  - foreman-proxy
+  - foreman-libvirt
+
 foreman_extra_repos_pkg:
   - epel-release
   - centos-release-scl-rh
   # - foreman-release-scl
-
-foreman_db_pgsql_adapter_pkg: foreman-postgresql

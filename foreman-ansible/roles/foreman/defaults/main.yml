@@ -1,6 +1,7 @@
 ---
-foreman_release: "1.18"
-puppet_release: 5
+foreman_release: 2.5
+puppet_release: 6
+katello_release: 4.1
 
 foreman_apt_main_baseurl: "http://deb.theforeman.org/"
 foreman_apt_main_os_version: "{{ ansible_distribution_release }}"
@@ -19,6 +20,8 @@ foreman_yum_main_gpg: 0
 foreman_yum_main_key: "http://yum.theforeman.org/releases/{{ foreman_release }}/RPM-GPG-KEY-foreman"
 
 puppet_yum_main_baseurl: "https://yum.puppetlabs.com/puppet{{ puppet_release }}/puppet{{ puppet_release }}-release-el-{{ ansible_distribution_major_version }}.noarch.rpm"
+
+katello_yum_main_baseurl: "https://yum.theforeman.org/katello/{{ katello_release }}/katello/el{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/katello-repos-latest.rpm"
 
 foreman_plugins_repo: true
 foreman_enable_service: true
@@ -41,5 +44,5 @@ foreman_net_interface: eth1
 foreman_proxy_tftp: "true"
 foreman_proxy_dns: "true"
 foreman_proxy_dhcp: "true"
-foreman_dhcp_start_ip: 192.168.18.131
-foreman_dhcp_end_ip: 192.168.18.230
+foreman_dhcp_start_ip: 192.168.100.3
+foreman_dhcp_end_ip: 192.168.100.254

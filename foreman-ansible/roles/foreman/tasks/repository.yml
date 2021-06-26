@@ -42,6 +42,13 @@
     state: present
   when: ansible_os_family == "RedHat"
 
+  # Redhat katello yum repo
+- name: configure katello yum repository
+  yum:
+    name: "{{ katello_yum_main_baseurl }}"
+    state: present
+  when: ansible_os_family == "RedHat"
+
 - name: configure additional repositories
   package:
     name: "{{ item }}"

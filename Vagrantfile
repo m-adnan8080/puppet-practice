@@ -2,13 +2,8 @@
 # vi: set ft=ruby :
 
 cluster = {
-  "foreman" => { :ip => "192.168.18.111", :gw => "192.168.18.1", :mem => 8192, :cpu => 2 },
-  # "server1" => { :ip => "192.168.100.112", :mem => 512, :cpu => 1 },
-  # "server2" => { :ip => "192.168.100.113", :mem => 512, :cpu => 1 },
-  # "server3" => { :ip => "192.168.100.113", :mem => 512, :cpu => 1 },
-  # "server4" => { :ip => "192.168.100.113", :mem => 512, :cpu => 1 },
-  # "server5" => { :ip => "192.168.100.113", :mem => 512, :cpu => 1 },
-  # "server6" => { :ip => "192.168.100.113", :mem => 512, :cpu => 1 },
+  "foreman" => { :ip => "192.168.100.2", :gw => "192.168.100.1", :mem => 8192, :cpu => 2 },
+  # "server1" => { :ip => "192.168.100.3", :mem => 512, :cpu => 1 },
 }
 
 Vagrant.configure("2") do |config|
@@ -25,7 +20,8 @@ Vagrant.configure("2") do |config|
       config.vm.define hostname do |cfg|
         cfg.vm.box = "centos/7"
         cfg.vm.provider :virtualbox do |vb, override|
-          override.vm.network :public_network, ip: "#{info[:ip]}", bridge: "wlp0s20f3"
+          # override.vm.network :public_network, ip: "#{info[:ip]}", bridge: "wlp0s20f3"
+          override.vm.network :private_network, ip: "#{info[:ip]}"
           override.vm.hostname = hostname + ".local.test"
           vb.name = hostname
           vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpu], "--hwvirtex", "on"]
@@ -35,7 +31,8 @@ Vagrant.configure("2") do |config|
       config.vm.define hostname do |cfg|
         cfg.vm.box = "ubuntu/focal64"
         cfg.vm.provider :virtualbox do |vb, override|
-          override.vm.network :public_network, ip: "#{info[:ip]}", bridge: "wlp0s20f3"
+          # override.vm.network :public_network, ip: "#{info[:ip]}", bridge: "wlp0s20f3"
+          override.vm.network :private_network, type: dhcp
           override.vm.hostname = hostname + ".local.test"
           vb.name = hostname
           vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpu], "--hwvirtex", "on"]

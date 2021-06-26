@@ -15,8 +15,16 @@
 #           --foreman-admin-password {{ foreman_admin_password }}"
 #   delay: 10
 
+- name: install foreman plugins
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ foreman_plugins_pkg }}"
+  when: foreman_db_adapter == "postgresql"
+
 - name: run foreman installer to addtional plugins
-  shell: "foreman-installer -s \
+  shell: "foreman-installer --scenario katello -s \
+          --foreman-initial-admin-password {{ foreman_admin_password }} \
           --foreman-proxy-tftp={{ foreman_proxy_tftp }} \
           --foreman-proxy-dhcp={{ foreman_proxy_dhcp }} \
           --foreman-proxy-dhcp-interface={{ foreman_net_interface }} \
@@ -30,10 +38,3 @@
           --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa \
           --enable-foreman-proxy-plugin-discovery \
           --foreman-proxy-plugin-discovery-install-images=true"
-
-- name: install foreman postgresql database adapter
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ foreman_db_pgsql_adapter_pkg }}"
-  when: foreman_db_adapter == "postgresql"
