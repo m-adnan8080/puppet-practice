@@ -2,4 +2,11 @@
 foreman_pkg: foreman-installer
 foreman_extra_repos_pkg: []
 
+foreman_plugins_pkg:
+  - foreman-postgresql
+  - ruby-foreman-discovery
+  - ruby-smart-proxy-discovery
+  - foreman-proxy
+  - foreman-libvirt
+
 foreman_db_pgsql_adapter_pkg: foreman-postgresql
