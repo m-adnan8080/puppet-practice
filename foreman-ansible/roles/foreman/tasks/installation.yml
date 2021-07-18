@@ -24,6 +24,8 @@
 
 - name: run foreman installer to addtional plugins
   shell: "foreman-installer --scenario katello -s \
+          --foreman-initial-organization {{ foreman_organization }} \
+          --foreman-initial-location {{ foreman_location }} \
           --foreman-initial-admin-password {{ foreman_admin_password }} \
           --foreman-proxy-tftp={{ foreman_proxy_tftp }} \
           --foreman-proxy-dhcp={{ foreman_proxy_dhcp }} \

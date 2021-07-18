@@ -40,6 +40,9 @@ foreman_admin_password: foreman
 foreman_admin_email: "admin@{{ ansible_fqdn }}"
 foreman_dns_forwarders: '8.8.8.8'
 
+foreman_organization: ZTech
+foreman_location: LabDC
+
 foreman_net_interface: eth1
 foreman_proxy_tftp: "true"
 foreman_proxy_dns: "true"
