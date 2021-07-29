@@ -338,3 +338,19 @@ sudo -n -H -u puppet bash -c "/opt/puppetlabs/puppet/bin/r10k deploy environment
 ### Git Server Setup
 Control-repo \ Setings \ CI/CD, Deploy Keys from the public key: /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa.pub
 
+
+
+
+=========================================================================================
+## Normal installation steps
+
+yum clean all
+yum localinstall https://yum.theforeman.org/releases/2.5/el7/x86_64/foreman-release.rpm
+yum localinstall https://yum.theforeman.org/katello/4.1/katello/el7/x86_64/katello-repos-latest.rpm
+yum localinstall https://yum.puppet.com/puppet6-release-el-7.noarch.rpm
+yum install epel-release centos-release-scl-rh
+yum update
+yum install foreman-installer-katello
+
+foreman-installer --scenario katello -s --foreman-initial-organization 'ZTech' --foreman-initial-location 'LabDC' --foreman-initial-admin-password 'foreman' --foreman-proxy-tftp=true --foreman-proxy-dns=true --foreman-proxy-dns-interface=eth1 --foreman-proxy-dns-zone=local.test --foreman-proxy-dns-forwarders='8.8.8.8' --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa --enable-foreman-proxy-plugin-discovery --foreman-proxy-plugin-discovery-install-images=true --foreman-proxy-plugin-discovery-source-url='http://downloads.theforeman.org/discovery/releases/3.8/'
+
