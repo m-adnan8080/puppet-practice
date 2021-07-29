@@ -39,4 +39,5 @@
           --foreman-proxy-dns-forwarders='{{ foreman_dns_forwarders }}' \
           --foreman-proxy-dns-reverse=0.100.168.192.in-addr.arpa \
           --enable-foreman-proxy-plugin-discovery \
-          --foreman-proxy-plugin-discovery-install-images=true"
+          --foreman-proxy-plugin-discovery-install-images=true \
+          --foreman-proxy-plugin-discovery-source-url='http://downloads.theforeman.org/discovery/releases/3.8/'"
